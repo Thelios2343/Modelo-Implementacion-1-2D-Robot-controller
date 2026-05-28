@@ -145,6 +145,8 @@ _lib.calcular_nueva_pos.restype = ctypes.c_int
 ---
 
 # Autores
-Juan Pablo Roa Monterrosa
-Juan Jose Mosquera Nieva
+Juan Pablo Roa Monterrosa,
+
+Juan Jose Mosquera Nieva,
+
 Laura Meneses Acosta
