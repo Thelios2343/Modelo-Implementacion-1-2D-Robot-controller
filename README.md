@@ -59,11 +59,8 @@ La interfaz gráfica fue desarrollada usando Tkinter.
 ```text id="6r9j8o"
 .
 ├── main.py
-├── ui.py
 ├── robot.py
-├── robotcore.c
-├── robotcore.so
-├── robotcore.dll
+├── robot_calc.c
 └── README.md
 ```
 
