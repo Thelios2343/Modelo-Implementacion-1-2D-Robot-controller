@@ -1,44 +1,37 @@
-# Robot 2D Controller
+# Robot Pozz - Controlador 2D
 
-Proyecto desarrollado en Python y C para el control de un robot en un plano bidimensional utilizando una interfaz gráfica en Tkinter.
+Proyecto desarrollado en Python y C para simular el movimiento de un robot en un plano bidimensional utilizando una interfaz gráfica con Tkinter.
 
-## Descripción
+---
 
-La aplicación simula el movimiento de un robot dentro de un área limitada.
-El robot puede desplazarse en cuatro direcciones:
+# Descripción
+
+La aplicación permite controlar un robot dentro de un espacio limitado en un plano cartesiano.
+
+El usuario puede mover el robot en cuatro direcciones:
 
 * Arriba
 * Abajo
 * Izquierda
 * Derecha
-* Reset
 
-El sistema valida que el robot no salga de los límites establecidos del plano.
+El sistema valida automáticamente que el robot no salga de los límites definidos.
 
-La lógica principal de movimiento fue implementada en C y conectada a Python mediante `ctypes`, mientras que la interfaz gráfica fue desarrollada usando Tkinter.
+La lógica de movimiento fue implementada en lenguaje C y conectada con Python mediante `ctypes`.
+
+La interfaz gráfica fue desarrollada usando Tkinter.
 
 ---
 
 # Características
 
-* Interfaz gráfica usando Tkinter
+* Interfaz gráfica en Tkinter
 * Integración Python + C
-* Validación de límites del plano
+* Librerías compartidas (`.so` y `.dll`)
+* Validación de límites
 * Arquitectura modular
+* Soporte multiplataforma
 * Reinicio de posición
-* Comunicación mediante librerías compartidas (`.so`)
-
----
-
-# Estructura del proyecto
-
-```text
-.
-├── robot.py
-├── main.py
-├── robot_calc.c
-└── README.md
-```
 
 ---
 
@@ -51,28 +44,57 @@ La lógica principal de movimiento fue implementada en C y conectada a Python me
 
 ---
 
-# Requisitos
+# Tecnologías utilizadas
 
 * Python 3
 * Tkinter
+* C
+* ctypes
 * GCC
-* Linux
 
 ---
 
-# Instalación
+# Estructura del proyecto
 
-## Instalar Tkinter
+```text id="6r9j8o"
+.
+├── main.py
+├── ui.py
+├── robot.py
+├── robotcore.c
+├── robotcore.so
+├── robotcore.dll
+└── README.md
+```
 
-### Debian/Ubuntu
+---
 
-```bash
+# Requisitos
+
+## Linux
+
+* Python 3
+* GCC
+* Tkinter
+
+## Windows
+
+* Python 3
+* GCC/MinGW (opcional si desea recompilar)
+
+---
+
+# Instalación de Tkinter
+
+## Debian / Ubuntu
+
+```bash id="jlwm4m"
 sudo apt install python3-tk
 ```
 
-### Arch Linux
+## Arch Linux
 
-```bash
+```bash id="jlwm4w"
 sudo pacman -S tk
 ```
 
@@ -80,15 +102,23 @@ sudo pacman -S tk
 
 # Compilación del módulo en C
 
-```bash
+## Linux
+
+```bash id="jlwm57"
 gcc -shared -o robotcore.so -fPIC robotcore.c
+```
+
+## Windows (MinGW)
+
+```bash id="jlwm5g"
+gcc -shared -o robotcore.dll robotcore.c
 ```
 
 ---
 
 # Ejecución
 
-```bash
+```bash id="jlwm5q"
 python3 main.py
 ```
 
@@ -96,41 +126,43 @@ python3 main.py
 
 # Arquitectura
 
-El proyecto se divide en dos capas principales:
+El proyecto se divide en dos partes principales:
 
 ## Backend (C)
 
 Responsable de:
 
-* Validar movimientos
-* Calcular posiciones
-* Controlar límites
+* Validación de movimientos
+* Cálculo de posiciones
+* Restricciones del plano
 
 ## Frontend (Python + Tkinter)
 
 Responsable de:
 
-* Mostrar la interfaz
+* Mostrar la interfaz gráfica
 * Capturar entradas del usuario
-* Actualizar el estado visual
+* Actualizar el estado visual del robot
 
 ---
 
 # Comunicación Python-C
 
-La integración entre Python y C se realiza mediante la librería `ctypes`.
+La integración entre Python y C se realiza usando `ctypes`.
 
 Ejemplo:
 
-```python
-_lib.calcular_nueva_pos.argtypes = [
-    ctypes.c_int, ctypes.c_int,
-    ctypes.c_char_p, ctypes.c_int,
-    ctypes.POINTER(ctypes.c_int),
-    ctypes.POINTER(ctypes.c_int),
-]
-_lib.calcular_nueva_pos.restype = ctypes.c_int
+```python id="jlwm60"
+_lib.calcular_nueva_pos(
+    self.x,
+    self.y,
+    direccion.encode("utf-8"),
+    pasos,
+    ctypes.byref(nueva_x),
+    ctypes.byref(nueva_y)
+)
 ```
+
 ---
 
 # Casos de prueba
@@ -144,9 +176,16 @@ _lib.calcular_nueva_pos.restype = ctypes.c_int
 
 ---
 
+# Captura de funcionamiento
+
+Interfaz gráfica para el control del robot mediante botones direccionales y validación de movimiento.
+
+---
+
 # Autores
-Juan Pablo Roa Monterrosa,
 
-Juan Jose Mosquera Nieva,
+Juan Pablo Roa Monterrosa.
 
-Laura Meneses Acosta
+Juan Jose Mosquera Nieva.
+
+Laura Meneses Acosta.
